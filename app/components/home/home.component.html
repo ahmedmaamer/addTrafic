@@ -1,0 +1,132 @@
+<div class="container center">
+  <div class="text">Add traffic information</div>
+  <form #myForm="ngForm" class="form1">
+    <div class="form-row">
+      <div class="input-data">
+        <mat-form-field appearance="outline">
+          <mat-label>Government:</mat-label>
+          <mat-select required name="gouv" [(ngModel)]="traffic.gouv">
+            <mat-option *ngFor="let gouv of governorates" [value]="gouv">
+              {{ gouv }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input-data">
+        <mat-form-field appearance="outline">
+          <mat-label>Location:</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="enter the exact location"
+            name="location"
+            required
+            [(ngModel)]="traffic.location"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="input-data">
+        <mat-form-field appearance="outline">
+          <mat-label>Duration:</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="enter the duration"
+            name="duration"
+            required
+            [(ngModel)]="traffic.duration"
+          />
+        </mat-form-field>
+      </div>
+      <div class="input-data">
+        <mat-form-field appearance="outline">
+          <mat-label>Severity:</mat-label>
+          <mat-select required name="severity" [(ngModel)]="traffic.severity">
+            <mat-option *ngFor="let severity of severities" [value]="severity">
+              {{ severity }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row1">
+      <div class="input-data">
+        <mat-form-field appearance="outline">
+          <mat-label>Description:</mat-label>
+          <textarea
+            style="width: 100%"
+            matInput
+            type="text"
+            placeholder="enter the description"
+            required
+            name="description"
+            [(ngModel)]="traffic.description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <div class="form-row" style="margin-left: 95px">
+    <div><h2>Filter your traffic infos depending on your position:</h2></div>
+    <div class="input-data">
+      <mat-form-field appearance="outline">
+        <mat-label>Government:</mat-label>
+        <mat-select
+          required
+          name="gouv"
+          [(ngModel)]="selectedGouv"
+          (ngModelChange)="onFiltredGouv(selectedGouv)"
+        >
+          <mat-option *ngFor="let gouv of governorates" [value]="gouv">
+            {{ gouv }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        type="button"
+        class="btn btn-info"
+        (click)="submit()"
+        style="margin-left: 200px"
+      >
+        Add infos
+      </button>
+    </div>
+
+    <div
+      class="msg-ctn"
+      *ngFor="let traf of listFiltred"
+      style="margin-right: 30px"
+    >
+      <div>
+        severity:
+        <span *ngIf="traf.severity == 'HIGH'" style="color: red">{{
+          traf.severity
+        }}</span>
+        <span *ngIf="traf.severity == 'MEDIUM'" style="color: orange">{{
+          traf.severity
+        }}</span>
+        <span *ngIf="traf.severity == 'LOW'" style="color: green">{{
+          traf.severity
+        }}</span>
+      </div>
+
+      <div class="p-grid">
+        <div class="p-col">
+          <div>
+            <b>Government:{{ traf.gouv }}</b>
+          </div>
+          <div>
+            location:<span class="dist-info">{{ traf.location }}</span>
+          </div>
+          <div>
+            Date:
+            <span class="date-info">{{ date }}</span>
+          </div>
+        </div>
+      </div>
+      <div>Description:{{ traf.description }}</div>
+    </div>
+  </div>
+</div>
